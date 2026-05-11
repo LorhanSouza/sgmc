@@ -1,0 +1,50 @@
+package br.com.mam.sgmc.api.openapi;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import br.com.mam.sgmc.api.dto.request.MembroRequestDTO;
+import br.com.mam.sgmc.model.Membro;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+
+public interface MembroControllerOpenAPI {
+
+    @Operation(summary = "Lista todos os membros", description = "Retorna uma lista de todos os membros cadastrados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Membros listados com sucesso")
+    })
+    ResponseEntity<Iterable<Membro>> getAllMembros();
+
+    @Operation(summary = "Busca um membro por ID", description = "Retorna um membro pelo seu identificador único.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Membro encontrado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Membro não encontrado")
+    })
+    ResponseEntity<Membro> getMembroById(@PathVariable Long id);
+
+    @Operation(summary = "Atualiza um membro", description = "Atualiza os dados de um membro existente.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Membro atualizado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Membro não encontrado"),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida")
+    })
+    ResponseEntity<Membro> updateMembro(@PathVariable Long id, @RequestBody @Valid MembroRequestDTO membroDTO);
+
+    @Operation(summary = "Cria um novo membro", description = "Adiciona um novo membro ao sistema.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Membro criado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida")
+    })
+    ResponseEntity<?> criarMembro(@RequestBody MembroRequestDTO membroDTO);
+
+    @Operation(summary = "Inativa um membro", description = "Desativa um membro, marcando-o como inativo.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Membro inativado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Membro não encontrado")
+    })
+    ResponseEntity<Void> inativarMembro(@PathVariable Long id);
+}
