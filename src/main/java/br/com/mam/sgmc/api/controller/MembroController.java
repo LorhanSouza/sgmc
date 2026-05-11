@@ -32,7 +32,7 @@ public class MembroController {
     private final MembroService membroService;
 
     @PostMapping
-    public ResponseEntity<?> criarMembro(@RequestBody @Valid MembroRequestDTO membroDTO) throws ResponseStatusException {
+    public ResponseEntity<Void> criarMembro(@RequestBody @Valid MembroRequestDTO membroDTO) throws ResponseStatusException {
         Membro membro = new Membro();
 
         membro.setNome(membroDTO.getNome());
