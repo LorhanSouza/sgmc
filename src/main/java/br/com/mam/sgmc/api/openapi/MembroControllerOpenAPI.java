@@ -9,8 +9,10 @@ import br.com.mam.sgmc.model.Membro;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+@Tag(name = "Membros", description = "API de gerenciamento de membros")
 public interface MembroControllerOpenAPI {
 
     @Operation(summary = "Lista todos os membros", description = "Retorna uma lista de todos os membros cadastrados.")
