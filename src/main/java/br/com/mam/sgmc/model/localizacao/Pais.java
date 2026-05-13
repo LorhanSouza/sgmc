@@ -7,7 +7,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -23,9 +22,9 @@ public class Pais {
     @Column(name = "continente", length = 50)
     private String continente;
 
-    @OneToOne(mappedBy = "pais")
-    private Uf uf;
+    @OneToMany(mappedBy = "pais")
+    private List<Uf> ufs;
 
     @OneToMany(mappedBy = "pais")
-    private List<Identificacao> identifications;
+    private List<Identificacao> identificacoes;
 }
