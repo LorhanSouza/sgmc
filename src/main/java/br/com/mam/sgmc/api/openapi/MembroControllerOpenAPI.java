@@ -1,11 +1,14 @@
 package br.com.mam.sgmc.api.openapi;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.mam.sgmc.api.dto.request.MembroRequestDTO;
-import br.com.mam.sgmc.model.Membro;
+import br.com.mam.sgmc.api.dto.response.MembroResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -19,14 +22,14 @@ public interface MembroControllerOpenAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Membros listados com sucesso")
     })
-    ResponseEntity<Iterable<Membro>> getAllMembros();
+    ResponseEntity<List<MembroResponseDTO>> listarMembros(@RequestParam(required = false) Integer ativo);
 
     @Operation(summary = "Busca um membro por ID", description = "Retorna um membro pelo seu identificador único.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Membro encontrado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Membro não encontrado")
     })
-    ResponseEntity<Membro> getMembroById(@PathVariable Long id);
+    ResponseEntity<MembroResponseDTO> buscarPorId(@PathVariable Long id);
 
     @Operation(summary = "Atualiza um membro", description = "Atualiza os dados de um membro existente.")
     @ApiResponses(value = {
@@ -34,7 +37,7 @@ public interface MembroControllerOpenAPI {
             @ApiResponse(responseCode = "404", description = "Membro não encontrado"),
             @ApiResponse(responseCode = "400", description = "Requisição inválida")
     })
-    ResponseEntity<Membro> updateMembro(@PathVariable Long id, @RequestBody @Valid MembroRequestDTO membroDTO);
+    ResponseEntity<MembroResponseDTO> atualizarMembro(@PathVariable Long id, @RequestBody @Valid MembroRequestDTO membroDTO);
 
     @Operation(summary = "Cria um novo membro", description = "Adiciona um novo membro ao sistema.")
     @ApiResponses(value = {
