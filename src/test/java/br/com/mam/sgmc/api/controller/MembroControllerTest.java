@@ -61,6 +61,8 @@ class MembroControllerTest {
         membroRequestDTO.setEmail("joao@email.com");
         membroRequestDTO.setTelefone("11999999999");
         membroRequestDTO.setDataNascimento(LocalDate.of(1990, 1, 1));
+        membroRequestDTO.setNacionalidade("Brasileira");
+        membroRequestDTO.setNaturalidade("São Paulo");
         membroRequestDTO.setEhBatizado(true);
         membroRequestDTO.setTemEscudo(true);
         membroRequestDTO.setAtivo(true);

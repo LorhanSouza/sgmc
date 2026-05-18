@@ -47,6 +47,8 @@ public class MembroController implements MembroControllerOpenAPI {
         membro.setEmail(membroDTO.getEmail());
         membro.setTelefone(membroDTO.getTelefone());
         membro.setDataNascimento(Date.valueOf(membroDTO.getDataNascimento()));
+        membro.setNacionalidade(membroDTO.getNacionalidade());
+        membro.setNaturalidade(membroDTO.getNaturalidade());
         membro.setEhBatizado(membroDTO.getCodigoBatizado());
         membro.setTemEscudo(membroDTO.getCodigoEscudo());
         membro.setAtivo(membroDTO.getCodigoAtivo());
@@ -98,6 +100,8 @@ public class MembroController implements MembroControllerOpenAPI {
         membro.setEmail(membroDTO.getEmail());
         membro.setTelefone(membroDTO.getTelefone());
         membro.setDataNascimento(Date.valueOf(membroDTO.getDataNascimento()));
+        membro.setNacionalidade(membroDTO.getNacionalidade());
+        membro.setNaturalidade(membroDTO.getNaturalidade());
         membro.setEhBatizado(membroDTO.getCodigoBatizado());
         membro.setTemEscudo(membroDTO.getCodigoEscudo());
         membro.setAtivo(membroDTO.getCodigoAtivo());
