@@ -79,4 +79,8 @@ public class Membro {
     @OneToMany(mappedBy = "membro", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Moto> motos;
+
+    @OneToMany(mappedBy = "membro", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Participacao> participacoes;
 }

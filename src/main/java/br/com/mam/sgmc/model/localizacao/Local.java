@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import br.com.mam.sgmc.api.dto.request.LocalRequestDTO;
 import br.com.mam.sgmc.model.Evento;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,11 +15,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "local")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Local {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,4 +51,22 @@ public class Local {
     @OneToMany(mappedBy = "local")
     @JsonManagedReference
     private List<Evento> eventos;
+
+    public static Local fromRequestDTO(LocalRequestDTO localRequestDTO) {
+        Local local = new Local();
+        local.setNome(localRequestDTO.getNome());
+        local.setEndereco(localRequestDTO.getEndereco());
+        local.setBairro(localRequestDTO.getBairro());
+        local.setNumero(localRequestDTO.getNumero());
+        local.setCodigoPostal(localRequestDTO.getCodigoPostal());
+        local.setCapacidade(localRequestDTO.getCapacidade());
+        local.setContato(localRequestDTO.getContato());
+        local.setCidade(new Cidade());
+        local.getCidade().setNome(localRequestDTO.getCidade());
+        local.getCidade().setUf(new Uf());
+        local.getCidade().getUf().setNome(localRequestDTO.getProvinciaEstado());
+        local.getCidade().getUf().setPais(new Pais());
+        local.getCidade().getUf().getPais().setNome(localRequestDTO.getPais());
+        return local;
+    }
 }
