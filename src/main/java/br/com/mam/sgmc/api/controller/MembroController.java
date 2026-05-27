@@ -143,5 +143,5 @@ public class MembroController implements MembroControllerOpenAPI {
     public ResponseEntity<Void> inativarMembro(@PathVariable Long id) {
         this.membroService.inativarMembro(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
+    }    
 }
