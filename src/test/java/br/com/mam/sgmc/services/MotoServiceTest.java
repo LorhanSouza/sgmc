@@ -80,14 +80,17 @@ class MotoServiceTest {
         moto = new Moto();
         moto.setPlaca("ABC1234");
         moto.setAno(2022);
-        moto.setCor("Preta");
         moto.setModelo(modelo);
-        moto.setSeguro(seguro);
 
+        // Initialize member
         membro = new Membro();
         membro.setId(1L);
         membro.setNome("Teste");
         membro.setAtivo(0); // ATIVO
+        // Associate member with moto
+        moto.setMembro(membro);
+        // Associate seguro with moto
+        moto.setSeguro(seguro);
     }
 
     @Test
@@ -162,12 +165,29 @@ class MotoServiceTest {
     @DisplayName("Deve listar todas as motos")
     void deveListarMotos() {
         System.out.println("Executando: Deve listar todas as motos");
-        when(motoRepository.findAll()).thenReturn(List.of(moto));
+        when(motoRepository.findWithFilters(null, null, null, null)).thenReturn(List.of(moto));
 
         List<Moto> motos = motoService.listarMotos(null, null, null, null);
-
         assertNotNull(motos);
         assertEquals(1, motos.size());
+        System.out.println("Sucesso: Lista de motos retornada com " + motos.size() + " item(ns).");
+    }
+
+
+    @Test
+    @DisplayName("Deve deletar uma moto e não aparecer na listagem")
+    void deveDeletarMotoEVerificarListagemVazia() {
+        System.out.println("Executando: Deve deletar uma moto e não aparecer na listagem");
+        when(motoRepository.findByPlaca("ABC1234")).thenReturn(moto);
+        when(motoRepository.findWithFilters(1L, null, null, null)).thenReturn(java.util.Collections.emptyList());
+        
+        motoService.deletarMoto(1L, "ABC1234");
+        
+        verify(motoRepository).deleteByPlaca("ABC1234");
+        
+        java.util.List<Moto> motos = motoService.listarMotos(1L, null, null, null);
+        assertNotNull(motos);
+        assertEquals(0, motos.size());
         System.out.println("Sucesso: Lista de motos retornada com " + motos.size() + " item(ns).");
     }
 
