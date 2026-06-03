@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import br.com.mam.sgmc.api.dto.request.EventoRequestDTO;
 import br.com.mam.sgmc.api.dto.request.InscricaoRequestDTO;
 import br.com.mam.sgmc.api.dto.response.EventoResponseDTO;
-import br.com.mam.sgmc.api.dto.response.ParticipacaoResponseDTO;
+import br.com.mam.sgmc.api.dto.response.InscricaoResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -54,5 +54,5 @@ public interface EventoControllerOpenAPI {
             @ApiResponse(responseCode = "400", description = "Requisição inválida", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{}"))),
             @ApiResponse(responseCode = "404", description = "Não encontrado", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{}")))
     })
-    ResponseEntity<List<ParticipacaoResponseDTO>> inscreverMembros(Long id, @Valid List<InscricaoRequestDTO> inscricoes);
+    ResponseEntity<List<InscricaoResponseDTO>> inscreverMembros(Long id, @Valid List<InscricaoRequestDTO> inscricoes);
 }

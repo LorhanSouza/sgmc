@@ -18,11 +18,11 @@ import br.com.mam.sgmc.api.openapi.EventoControllerOpenAPI;
 import br.com.mam.sgmc.api.dto.request.EventoRequestDTO;
 import br.com.mam.sgmc.api.dto.request.InscricaoRequestDTO;
 import br.com.mam.sgmc.api.dto.response.EventoResponseDTO;
-import br.com.mam.sgmc.api.dto.response.ParticipacaoResponseDTO;
+import br.com.mam.sgmc.api.dto.response.InscricaoResponseDTO;
 import br.com.mam.sgmc.model.Evento;
 import br.com.mam.sgmc.model.Membro;
-import br.com.mam.sgmc.model.Participacao;
-import br.com.mam.sgmc.model.pk.ParticipacaoPk;
+import br.com.mam.sgmc.model.Inscricao;
+import br.com.mam.sgmc.model.pk.InscricaoPk;
 import br.com.mam.sgmc.model.moto.Moto;
 import br.com.mam.sgmc.services.EventoService;
 import br.com.mam.sgmc.services.MembroService;
@@ -78,13 +78,13 @@ public class EventoController implements EventoControllerOpenAPI {
     }
 
     @PostMapping("/{id}/inscricoes")
-    public ResponseEntity<List<ParticipacaoResponseDTO>> inscreverMembros(
+    public ResponseEntity<List<InscricaoResponseDTO>> inscreverMembros(
             @PathVariable Long id,
-            @RequestBody @Valid List<InscricaoRequestDTO> inscricoes) {
+            @RequestBody @Valid List<InscricaoRequestDTO> inscricoesRequestDTO) {
         
         Evento evento = this.eventoService.buscarPorId(id);
         
-        List<Participacao> participacoes = inscricoes.stream().map(dto -> {
+        List<Inscricao> inscricoes = inscricoesRequestDTO.stream().map(dto -> {
             Membro membro = this.membroService.buscarPorId(dto.getIdMembro());
             
             Moto moto = null;
@@ -95,17 +95,17 @@ public class EventoController implements EventoControllerOpenAPI {
                 }
             }
             
-            ParticipacaoPk pk = new ParticipacaoPk(evento, membro);
-            Participacao participacao = new Participacao();
-            participacao.setPk(pk);
-            participacao.setMoto(moto);
-            participacao.setDataInscricao(new java.sql.Date(System.currentTimeMillis()));
-            return participacao;
+            InscricaoPk pk = new InscricaoPk(evento, membro);
+            Inscricao inscricao = new Inscricao();
+            inscricao.setPk(pk);
+            inscricao.setMoto(moto);
+            inscricao.setDataInscricao(new java.sql.Date(System.currentTimeMillis()));
+            return inscricao;
         }).toList();
         
-        List<Participacao> participacoesSalvas = this.eventoService.inscreverMembros(participacoes);
-        List<ParticipacaoResponseDTO> response = participacoesSalvas.stream()
-                .map(ParticipacaoResponseDTO::toResponseDTO)
+        List<Inscricao> inscricoesSalvas = this.eventoService.inscreverMembros(inscricoes);
+        List<InscricaoResponseDTO> response = inscricoesSalvas.stream()
+                .map(InscricaoResponseDTO::toResponseDTO)
                 .toList();
                 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

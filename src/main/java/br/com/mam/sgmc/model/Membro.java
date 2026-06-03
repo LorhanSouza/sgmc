@@ -82,5 +82,5 @@ public class Membro {
 
     @OneToMany(mappedBy = "pk.membro", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Participacao> participacoes;
+    private List<Inscricao> inscricoes;
 }
