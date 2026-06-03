@@ -3,6 +3,7 @@ package br.com.mam.sgmc.api.controller;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@PreAuthorize("hasAnyRole('PRESIDENT','SECRETARY')")
 @RestController
 @RequestMapping("/sedes")
 @RequiredArgsConstructor
