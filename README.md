@@ -54,6 +54,8 @@ Este projeto utiliza o que há de mais moderno no ecossistema Java:
 4.  Acesse a documentação da API (Swagger):
     ```
     http://localhost:8080/swagger-ui.html
+    ou
+    http://localhost:8080/api/swagger-ui/index.html
     ```
 
 ## 🧪 Rodando os Testes
