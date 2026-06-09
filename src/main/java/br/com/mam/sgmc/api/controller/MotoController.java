@@ -27,11 +27,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import jakarta.validation.Valid;
 
+import br.com.mam.sgmc.api.openapi.MotoControllerOpenAPI;
+
 @PreAuthorize("hasAnyRole('PRESIDENT','SECRETARY')")
 @RestController
 @RequestMapping(value = "/motos")
 @RequiredArgsConstructor
-public class MotoController {
+public class MotoController implements MotoControllerOpenAPI {
 
     private final MotoService motoService;
 
