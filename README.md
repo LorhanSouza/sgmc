@@ -12,9 +12,26 @@ Este projeto utiliza o que há de mais moderno no ecossistema Java:
 *   **Hibernate 7.2**: Implementação ORM robusta.
 *   **MySQL**: Banco de dados relacional usado em produção.
 *   **H2 Database**: Banco de dados em memória para desenvolvimento e testes.
+*   **Keycloak / Spring Security OAuth2**: Gerenciamento de identidade e controle de acesso baseado em JWT.
 *   **Scalar**: Documentação interativa da API.
 *   **JUnit 5 & Mockito**: Garantia de qualidade via testes automatizados.
 *   **Lombok**: Redução de código boilerplate.
+
+## 🔒 Segurança e Controle de Acesso (Keycloak)
+
+O sistema integra o **Spring Security** atuando como um **OAuth2 Resource Server** com JWT para validação de tokens gerados pelo **Keycloak**. 
+
+### Perfis de Acesso (Roles)
+*   **`admin`**: Acesso total a todas as funcionalidades do sistema (visualização, criação, edição e exclusão de membros, sedes, motos e eventos).
+*   **`diretoria`**: Acesso administrativo completo equivalente ao `admin`.
+*   **`membro`**: Acesso do tipo *self-service*. O usuário com esse perfil só pode visualizar e alterar as suas próprias informações cadastrais, cadastrar/alterar suas próprias motos e realizar sua própria inscrição em eventos. O controle é feito comparando o e-mail presente no token JWT do Keycloak com o e-mail do recurso solicitado.
+
+As regras de autorização são declaradas nos controladores usando anotações `@PreAuthorize` delegadas para o componente customizado de segurança `SgmcSecurity`.
+
+### Documentação Pública
+Os endpoints de documentação da API estão configurados para livre acesso (sem autenticação):
+*   `/api/docs/index.html`
+*   `/api/v3/api-docs`
 
 ## 🛠️ Funcionalidades Principais
 
@@ -39,6 +56,7 @@ Este projeto utiliza o que há de mais moderno no ecossistema Java:
 *   JDK 21 ou superior.
 *   Maven 3.8+ instalado (ou use o `./mvnw` incluso).
 *   MySQL 8.0 ou superior instalado.
+*   Keycloak em execução no endereço `http://localhost:8089` (realm: `sgmc`).
 
 ### Passo a Passo
 1.  Clone o repositório:
@@ -66,7 +84,7 @@ Para garantir que tudo está funcionando corretamente:
 ./mvnw test
 ```
 
-Os testes utilizam o novo padrão do **Spring Boot 4**, com `@MockitoBean` para garantir isolamento e performance.
+Os testes utilizam o padrão do **Spring Boot 4**, com `@MockitoBean` para simular as regras de segurança e banco de dados em memória, garantindo isolamento total de dependências externas (como o servidor físico do Keycloak).
 
 ## 📄 Licença
 
