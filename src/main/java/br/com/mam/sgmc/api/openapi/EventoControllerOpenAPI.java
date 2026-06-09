@@ -41,7 +41,7 @@ public interface EventoControllerOpenAPI {
             @ApiResponse(responseCode = "404", description = "Não encontrado", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{}"))),
             @ApiResponse(responseCode = "400", description = "Requisição inválida", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{}")))
     })
-    ResponseEntity<EventoResponseDTO> atualizarEvento(Long id, EventoRequestDTO evento);
+    ResponseEntity<EventoResponseDTO> atualizarEvento(Long id, @Valid EventoRequestDTO evento);
 
     @Operation(summary = "Deleta um evento", responses = {
             @ApiResponse(responseCode = "204", description = "No Content", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{}"))),
